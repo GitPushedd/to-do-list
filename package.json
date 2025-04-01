@@ -1,5 +1,5 @@
 {
-  "name": "nombre-de-archivo",
+  "name": "to-do-list",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+link-de-repositorio"
+    "url": "git+https://github.com/GitPushedd/to-do-list"
   },
   "author": "Alejandro Hernández <maikeralejandro@hotmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "link-de-repositorio/issues"
+    "url": "https://github.com/GitPushedd/to-do-list/issues"
   },
-  "homepage": "link-de-repositorio#readme",
+  "homepage": "https://github.com/GitPushedd/to-do-list#readme",
   "description": "",
   "devDependencies": {
     "css-loader": "^7.1.2",
