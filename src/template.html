@@ -5,5 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToDo-list</title>
   </head>
-  <body></body>
+  <body>
+    <head>
+      <h1>ToDo List</h1>
+      <input type="text" id="buscador-tarea" placeholder="buscar..." />
+    </head>
+    <main>
+      <div id="sidebar">
+        <div class="botones">
+          <button id="bandeja-de-entrada">Bandeja de entrada</button>
+          <button id="hoy">Hoy</button>
+          <button id="semana">Semana</button>
+          <button id="importante">Importante</button>
+          <button id="completado">Completado</button>
+        </div>
+
+        <div class="proyectos-container">
+          <p>proyectos</p>
+          <button id="agregar-proyecto">+</button>
+          <div id="proyectos"></div>
+        </div>
+      </div>
+
+      <div id="main-container"></div>
+    </main>
+  </body>
 </html>
