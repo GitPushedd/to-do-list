@@ -1,5 +1,5 @@
 class Almacenamiento {
-  disponibilidad(tipo) {
+  static disponibilidad(tipo) {
     let almacenamiento;
     try {
       almacenamiento = window[tipo];
@@ -13,15 +13,27 @@ class Almacenamiento {
   }
 
   static agregar(tipo, clave, valor) {
-    if (!disponibilidad(tipo)) return;
-    if (typeof valor === "object") {
-      //agregar que no se sustituya sino que se agregue a un array
-      valor = JSON.stringify(valor);
+    if (!this.disponibilidad(tipo)) return;
+
+    const almacenamiento = window[tipo];
+    let item;
+
+    try {
+      item = JSON.parse(almacenamiento.getItem(clave));
+    } catch (e) {
+      item = [];
     }
+
+    if (!Array.isArray(item)) {
+      item = [];
+    }
+
+    item.push(valor);
+    almacenamiento.setItem(clave, JSON.stringify(item));
   }
 
   static leer(tipo = "localStorage", clave) {
-    if (!disponibilidad(tipo)) return;
+    if (!this.disponibilidad(tipo)) return;
     let valor = window[tipo].getItem(clave);
     try {
       return JSON.parse(valor);
@@ -30,13 +42,33 @@ class Almacenamiento {
     }
   }
 
-  static eliminar(tipo = "localStorage", clave) {
-    if (!disponibilidad(tipo)) return;
-    window[tipo].removeItem(clave);
+  static eliminar(tipo = "localStorage", clave, id) {
+    if (!this.disponibilidad(tipo)) return;
+    const almacenamiento = window[tipo];
+    let item;
+
+    try {
+      item = JSON.parse(almacenamiento.getItem(clave));
+    } catch (e) {
+      item = [];
+    }
+
+    if (!Array.isArray(item)) {
+      item = [];
+    }
+
+    let posicion = item.findIndex((index) => index.id == id);
+
+    if (posicion == -1) {
+      console.log("No se encontró el ID " + id);
+      return;
+    }
+    item.splice(posicion, 1);
+    almacenamiento.setItem(clave, JSON.stringify(item));
   }
 
   static limpiar(tipo = "localStorage") {
-    if (!disponibilidad(tipo)) return;
+    if (!this.disponibilidad(tipo)) return;
     window[tipo].clear();
   }
 }
