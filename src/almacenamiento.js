@@ -12,7 +12,7 @@ class Almacenamiento {
     }
   }
 
-  static agregar(tipo, clave, valor) {
+  static agregar(tipo = "localStorage", clave, valor) {
     if (!this.disponibilidad(tipo)) return;
 
     const almacenamiento = window[tipo];
