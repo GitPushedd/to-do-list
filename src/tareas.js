@@ -26,22 +26,7 @@ class Tarea {
     this.prioridad = prioridad;
     this.proyecto = proyecto;
     this.estado = estado;
-    this.id = this.generarId();
-  }
-
-  generarId() {
-    let id;
-    do {
-      id = Math.floor(Math.random() * 10000);
-      if (Almacenamiento.leer("localStorage", "tareas") === null) {
-        return id;
-      }
-    } while (
-      Almacenamiento.leer("localStorage", "tareas").some(
-        (tarea) => tarea.id === id
-      )
-    );
-    return id;
+    this.id = Utilidades.generarId();
   }
 
   setEstado() {
@@ -109,7 +94,7 @@ class GestorTareas {
   }
 
   static getTareas() {
-    return this.tareas;
+    return Almacenamiento.leer("localStorage", "tareas");
   }
 }
 
