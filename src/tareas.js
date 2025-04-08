@@ -1,4 +1,5 @@
 import { PRIORIDADES, PROYECTOS } from "./config.js";
+import Almacenamiento from "./almacenamiento.js";
 
 class Validador {
   static validarPrioridad(prioridad) {
@@ -11,8 +12,6 @@ class Validador {
 }
 
 class Tarea {
-  static PRIORIDADES = ["alta", "media", "baja"];
-
   constructor(
     titulo,
     descripcion,
@@ -27,6 +26,22 @@ class Tarea {
     this.prioridad = prioridad;
     this.proyecto = proyecto;
     this.estado = estado;
+    this.id = this.generarId();
+  }
+
+  generarId() {
+    let id;
+    do {
+      id = Math.floor(Math.random() * 10000);
+      if (Almacenamiento.leer("localStorage", "tareas") === null) {
+        return id;
+      }
+    } while (
+      Almacenamiento.leer("localStorage", "tareas").some(
+        (tarea) => tarea.id === id
+      )
+    );
+    return id;
   }
 
   setEstado() {
@@ -67,8 +82,6 @@ class Tarea {
 }
 
 class GestorTareas {
-  static tareas = [];
-
   static agregarTarea(
     titulo,
     descripcion,
@@ -77,7 +90,9 @@ class GestorTareas {
     proyecto = "por defecto",
     estado = false
   ) {
-    this.tareas.push(
+    Almacenamiento.agregar(
+      "localStorage",
+      "tareas",
       new Tarea(
         titulo,
         descripcion,
@@ -87,20 +102,15 @@ class GestorTareas {
         estado
       )
     );
-    console.log(`Tarea ${tarea.titulo} agregada.`);
   }
 
-  static eliminarTarea(titulo) {
-    const indice = this.tareas.findIndex((tarea) => tarea.titulo === titulo);
-    if (indice !== -1) {
-      this.tareas.splice(indice, 1);
-      console.log(`Tarea ${titulo} eliminada.`);
-    } else {
-      console.log(`La tarea ${titulo} no existe.`);
-    }
+  static eliminarTarea(id) {
+    Almacenamiento.eliminar("localStorage", "tareas", id);
   }
 
   static getTareas() {
     return this.tareas;
   }
 }
+
+export { Tarea, GestorTareas };

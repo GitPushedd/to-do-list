@@ -24,3 +24,5 @@ class Proyecto {
     return PROYECTOS;
   }
 }
+
+export default Proyecto;
